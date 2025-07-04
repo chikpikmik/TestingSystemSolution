@@ -2,10 +2,10 @@
 {
     public class UserAnswer
     {
-        public int Id { get; set; }
-        public AnswerOption Option { get; set; }
-        public TestResult Result { get; set; }
-        public int OptionId { get; set; }
-        public int TestResultId { get; set; }
+        public Guid Id { get; set; }
+
+
+        public AnswerOption AnswerOption { get; set; }
+        public TestResult TestResult { get; set; }
     }
 }
