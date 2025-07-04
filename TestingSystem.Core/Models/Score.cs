@@ -5,8 +5,6 @@
         public Guid Id { get; set; }
 
         public TestResult? TestResult { get; set; }
-        public AnswerOption? AnswerOption { get; set; }
-        public Guid? AnswerOptionId { get; set; }
 
         public List<VectorScore> VectorsScores { get; set; }
 

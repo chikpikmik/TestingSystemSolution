@@ -22,10 +22,10 @@ namespace TestingSystem.Data.Sqlite.Configurations
                 .HasOne(ao => ao.Question)
                 .WithMany(q => q.AnswersOptions)
                 .OnDelete(DeleteBehavior.Cascade);
-            //builder
-            //    .HasOne(ao => ao.Score)
-            //    .WithOne(s => s.AnswerOption)
-            //    .OnDelete(DeleteBehavior.Cascade);
+            builder
+                .HasOne(ao => ao.Score)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
          
         }
     }

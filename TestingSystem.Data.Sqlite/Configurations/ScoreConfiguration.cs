@@ -21,12 +21,6 @@ namespace TestingSystem.Data.Sqlite.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
             
             builder
-                .HasOne(s => s.AnswerOption)
-                .WithOne(ao => ao.Score)
-                .HasForeignKey<Score>(s => s.AnswerOptionId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
-            builder
                 .HasOne(s => s.TestResult)
                 .WithOne(tr => tr.Score)
                 .HasForeignKey<TestResult>(tr => tr.ScoreId)
