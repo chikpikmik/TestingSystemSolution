@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Windows;
+using TestingSystem.Data.Sqlite;
 
 namespace TestingSystem
 {
@@ -9,6 +10,9 @@ namespace TestingSystem
     /// </summary>
     public partial class App : Application
     {
+
+
+     
     }
 
 }

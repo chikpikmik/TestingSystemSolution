@@ -2,7 +2,7 @@
 {
     public class Score
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public TestResult? TestResult { get; set; }
 

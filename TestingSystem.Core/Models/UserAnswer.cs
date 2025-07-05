@@ -2,7 +2,7 @@
 {
     public class UserAnswer
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
 
         public AnswerOption AnswerOption { get; set; }

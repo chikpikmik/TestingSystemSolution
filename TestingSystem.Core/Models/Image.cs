@@ -3,8 +3,23 @@ namespace TestingSystem.Core.Models
 {
     public class Image
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public byte[] Data { get; set; }
+
+        //public BitmapImage GetImage()
+        //{
+        //    if (Data == null || Data.Length == 0)
+        //        return null;
+
+        //    using var stream = new MemoryStream(Data);
+        //    var image = new BitmapImage();
+        //    image.BeginInit();
+        //    image.CacheOption = BitmapCacheOption.OnLoad;
+        //    image.StreamSource = stream;
+        //    image.EndInit();
+        //    image.Freeze();
+        //    return image;
+        //}
     }
 }

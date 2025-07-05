@@ -2,7 +2,7 @@
 {
     public class VectorScore
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public double Value { get; set; }
 

@@ -22,9 +22,18 @@ namespace TestingSystem.Data.Sqlite
         {
             SQLitePCL.Batteries.Init();
         }
+
+        public static string GetDatabasePath()
+        {
+            //var solutionPath = @"C:\Users\pc\source\repos\TestingSystemSolution";
+            var exePath = System.AppContext.BaseDirectory;
+            var solutionPath = Path.GetFullPath(Path.Combine(exePath, @"..\..\..\..\"));
+            var dbDirectory = Path.Combine(solutionPath, "TestingSystem.Data.Sqlite");
+            return Path.Combine(dbDirectory, "db");
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=db");
+            optionsBuilder.UseSqlite($"Data Source={GetDatabasePath()}");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

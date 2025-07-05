@@ -9,8 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Views\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestingSystem.Data.Sqlite\TestingSystem.Data.Sqlite.csproj" />
   </ItemGroup>
 
 </Project>
