@@ -12,6 +12,8 @@ namespace TestingSystem.Data.Sqlite.Configurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Property(v => v.Description).IsRequired(false);
+            builder.Property(v => v.Description).HasMaxLength(100);
+            builder.HasIndex(v => v.Name).IsUnique();
 
         }
     }

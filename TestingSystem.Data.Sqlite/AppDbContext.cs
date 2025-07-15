@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using TestingSystem.Core.Models;
 using TestingSystem.Data.Sqlite.Configurations;
 
@@ -18,9 +19,26 @@ namespace TestingSystem.Data.Sqlite
         public DbSet<Image> Images { get; set; }
 
 
+        // Основной конструктор для DI
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options)
+        {
+            SQLitePCL.Batteries.Init();
+        }
+
+        // Конструктор без параметров (только для миграций!)
         public AppDbContext()
         {
             SQLitePCL.Batteries.Init();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            // Используется только для миграций!
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlite($"Data Source={GetDatabasePath()}");
+            }
         }
 
         public static string GetDatabasePath()
@@ -30,10 +48,6 @@ namespace TestingSystem.Data.Sqlite
             var solutionPath = Path.GetFullPath(Path.Combine(exePath, @"..\..\..\..\"));
             var dbDirectory = Path.Combine(solutionPath, "TestingSystem.Data.Sqlite");
             return Path.Combine(dbDirectory, "db");
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite($"Data Source={GetDatabasePath()}");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

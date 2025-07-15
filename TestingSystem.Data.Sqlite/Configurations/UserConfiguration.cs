@@ -14,7 +14,8 @@ namespace TestingSystem.Data.Sqlite.Configurations
             builder.HasIndex(u => u.Login).IsUnique();
             builder.Property(u => u.Login).HasMaxLength(50);
             builder.Property(u => u.Name).HasMaxLength(50);
-            builder.Property(u => u.Password).HasMaxLength(50);
+            builder.Property(u => u.PasswordHash).IsRequired().HasMaxLength(512);
+            builder.Property(u => u.PasswordSalt).IsRequired().HasMaxLength(256);
 
 
             builder
