@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TestingSystem.Core.Models;
+using TestingSystem.Data.Sqlite.Entities;
 
 namespace TestingSystem.Data.Sqlite.Configurations
 {
-    public class VectorScoreConfiguration : IEntityTypeConfiguration<VectorScore>
+    public class VectorScoreConfiguration : IEntityTypeConfiguration<VectorScoreEntity>
     {
-        public void Configure(EntityTypeBuilder<VectorScore> builder)
+        public void Configure(EntityTypeBuilder<VectorScoreEntity> builder)
         {
 
             builder.HasKey(x => x.Id);

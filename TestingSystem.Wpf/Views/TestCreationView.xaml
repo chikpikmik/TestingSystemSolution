@@ -1,0 +1,101 @@
+﻿<Page x:Class="TestingSystem.Wpf.Views.TestCreationView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TestingSystem.Wpf.Views" 
+      xmlns:vm="clr-namespace:TestingSystem.Wpf.ViewModels"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CreateTest">
+
+    <Page.Resources>
+        <!-- Шаблон для Теста -->
+        <HierarchicalDataTemplate DataType="{x:Type vm:TestVM}" 
+                           ItemsSource="{Binding Questions}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="{Binding Image}" Width="16" Height="16" Margin="0,0,5,0"/>
+                <TextBox Text="{Binding Name}" FontWeight="Bold"/>
+                <TextBlock Text=" (" Foreground="Gray"/>
+                <TextBox Text="{Binding Description}" Foreground="Gray"/>
+                <TextBlock Text=")" Foreground="Gray"/>
+
+                <Button Content="+" Command="{Binding AddChildCommand}" Margin="5,0,0,0" ToolTip="Добавить вопрос"/>
+
+            </StackPanel>
+        </HierarchicalDataTemplate>
+
+        <!-- Шаблон для Вопроса -->
+        <HierarchicalDataTemplate DataType="{x:Type vm:QuestionVM}" 
+                           ItemsSource="{Binding AnswerOptions}">
+            <StackPanel Orientation="Horizontal">
+                <!--Image Source="{Binding Image}" Width="16" Height="16" Margin="0,0,5,0"/-->
+                <TextBox Text="{Binding Text}"/>
+                <Button Content="+" Command="{Binding AddChildCommand}" Margin="5,0,0,0" ToolTip="Добавить вариант ответа"/>
+                <Button Content="-" Command="{Binding DeleteCommand}" Margin="5,0,0,0" ToolTip="Удалить"/>
+
+            </StackPanel>
+        </HierarchicalDataTemplate>
+
+        <!-- Шаблон для Варианта ответа -->
+        <HierarchicalDataTemplate DataType="{x:Type vm:AnswerOptionVM}" 
+                           ItemsSource="{Binding Score.VectorScores}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="{Binding Image}" Width="16" Height="16" Margin="0,0,5,0"/>
+                <TextBox Text="{Binding Text}"/>
+                <ComboBox ItemsSource="{Binding Score.AllScores}" SelectedItem="{Binding Score}" IsEditable="False" Margin="5,0,5,0"/>
+
+                <Button Content="+" Command="{Binding AddChildCommand}" Margin="5,0,0,0" ToolTip="Добавить вектор-значение"/>
+                <Button Content="-" Command="{Binding DeleteCommand}" Margin="5,0,0,0" ToolTip="Удалить"/>
+
+            </StackPanel>
+        </HierarchicalDataTemplate>
+
+        <!-- Шаблон для Вектор-значения -->
+        <DataTemplate DataType="{x:Type vm:VectorScoreVM}">
+            <StackPanel Orientation="Horizontal">
+
+                <TextBlock Text="Вектор:" Grid.Column="0" Margin="0,0,5,0"/>
+                <ComboBox SelectedItem="{Binding Vector}" 
+                          Text="{Binding Vector.Name}"
+                          ItemsSource="{Binding Vector.AllVectors}"
+                          IsEditable="{Binding Vector.IsEditable}"
+                          IsTextSearchEnabled="False"
+                          Width="80" Margin="0,0,5,0"/>
+                <!--ItemsSource="{Binding DataContext.AllVectors, ElementName=CreateTestPage}"-->
+                
+                <TextBlock Text="Описание:" Grid.Column="2" Margin="5,0,5,0"/>
+                <TextBox Text="{Binding Vector.Description}" 
+                         IsEnabled="{Binding Vector.IsEditable}"
+                         Width="80"/>
+
+                <Button Content="Save vector" 
+                        IsEnabled="{Binding Vector.IsEditable}" 
+                        Command="{Binding Vector.saveButtonCommand}"
+                        Margin="5,0,5,0"/>
+
+                <TextBlock Text="Значение:" Margin="5,0,5,0"/>
+                <TextBox Text="{Binding Value}" Width="80" IsReadOnly="False"/>
+
+                <Button Content="-" Command="{Binding DeleteCommand}" Margin="5,0,0,0" ToolTip="Удалить"/>
+
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+
+    <Grid>
+
+        <TreeView x:Name="MainTree" ItemsSource="{Binding Tests}">
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="True"/>
+                    <Setter Property="Margin" Value="0,2"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
+        </TreeView>
+
+
+        <Button Content="Подтвердить" HorizontalAlignment="Left" Margin="635,0,0,27" VerticalAlignment="Bottom" Height="29" Width="113"/>
+    </Grid>
+</Page>

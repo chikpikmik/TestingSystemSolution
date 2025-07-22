@@ -17,22 +17,22 @@ namespace TestingSystem.Data.Sqlite.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.6");
 
-            modelBuilder.Entity("ImageQuestion", b =>
+            modelBuilder.Entity("ImageEntityQuestionEntity", b =>
                 {
                     b.Property<int>("ImagesId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("QuestionId")
+                    b.Property<int>("QuestionEntityId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ImagesId", "QuestionId");
+                    b.HasKey("ImagesId", "QuestionEntityId");
 
-                    b.HasIndex("QuestionId");
+                    b.HasIndex("QuestionEntityId");
 
-                    b.ToTable("ImageQuestion");
+                    b.ToTable("ImageEntityQuestionEntity");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.AnswerOption", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.AnswerOptionEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +63,7 @@ namespace TestingSystem.Data.Sqlite.Migrations
                     b.ToTable("AnswersOptions");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.Image", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.ImageEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,7 +78,7 @@ namespace TestingSystem.Data.Sqlite.Migrations
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.Question", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.QuestionEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -99,7 +99,7 @@ namespace TestingSystem.Data.Sqlite.Migrations
                     b.ToTable("Questions");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.Score", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.ScoreEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -110,7 +110,7 @@ namespace TestingSystem.Data.Sqlite.Migrations
                     b.ToTable("Scores");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.Test", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.TestEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -140,7 +140,7 @@ namespace TestingSystem.Data.Sqlite.Migrations
                     b.ToTable("Tests");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.TestResult", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.TestResultEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -163,9 +163,6 @@ namespace TestingSystem.Data.Sqlite.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ScoreId")
-                        .IsUnique();
-
                     b.HasIndex("TestId");
 
                     b.HasIndex("UserId");
@@ -173,7 +170,33 @@ namespace TestingSystem.Data.Sqlite.Migrations
                     b.ToTable("TestsResults");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.User", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.UserAnswerEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AnswerOptionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TestResultEntityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TestResultId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnswerOptionId");
+
+                    b.HasIndex("TestResultEntityId");
+
+                    b.HasIndex("TestResultId");
+
+                    b.ToTable("UsersAnswers");
+                });
+
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.UserEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -212,33 +235,7 @@ namespace TestingSystem.Data.Sqlite.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.UserAnswer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("AnswerOptionId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TestResultId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TestResultId1")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnswerOptionId");
-
-                    b.HasIndex("TestResultId");
-
-                    b.HasIndex("TestResultId1");
-
-                    b.ToTable("UsersAnswers");
-                });
-
-            modelBuilder.Entity("TestingSystem.Core.Models.Vector", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.VectorEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -260,7 +257,7 @@ namespace TestingSystem.Data.Sqlite.Migrations
                     b.ToTable("Vectors");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.VectorScore", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.VectorScoreEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -284,35 +281,35 @@ namespace TestingSystem.Data.Sqlite.Migrations
                     b.ToTable("VectorsScores");
                 });
 
-            modelBuilder.Entity("ImageQuestion", b =>
+            modelBuilder.Entity("ImageEntityQuestionEntity", b =>
                 {
-                    b.HasOne("TestingSystem.Core.Models.Image", null)
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.ImageEntity", null)
                         .WithMany()
                         .HasForeignKey("ImagesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TestingSystem.Core.Models.Question", null)
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.QuestionEntity", null)
                         .WithMany()
-                        .HasForeignKey("QuestionId")
+                        .HasForeignKey("QuestionEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.AnswerOption", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.AnswerOptionEntity", b =>
                 {
-                    b.HasOne("TestingSystem.Core.Models.Image", "Image")
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.ImageEntity", "Image")
                         .WithMany()
                         .HasForeignKey("ImageId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("TestingSystem.Core.Models.Question", "Question")
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.QuestionEntity", "Question")
                         .WithMany("AnswersOptions")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TestingSystem.Core.Models.Score", "Score")
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.ScoreEntity", "Score")
                         .WithMany()
                         .HasForeignKey("ScoreId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -325,9 +322,9 @@ namespace TestingSystem.Data.Sqlite.Migrations
                     b.Navigation("Score");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.Question", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.QuestionEntity", b =>
                 {
-                    b.HasOne("TestingSystem.Core.Models.Test", "Test")
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.TestEntity", "Test")
                         .WithMany("Questions")
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -336,15 +333,15 @@ namespace TestingSystem.Data.Sqlite.Migrations
                     b.Navigation("Test");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.Test", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.TestEntity", b =>
                 {
-                    b.HasOne("TestingSystem.Core.Models.User", "Author")
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.UserEntity", "Author")
                         .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TestingSystem.Core.Models.Image", "Image")
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.ImageEntity", "Image")
                         .WithMany()
                         .HasForeignKey("ImageId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -354,35 +351,51 @@ namespace TestingSystem.Data.Sqlite.Migrations
                     b.Navigation("Image");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.TestResult", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.TestResultEntity", b =>
                 {
-                    b.HasOne("TestingSystem.Core.Models.Score", "Score")
-                        .WithOne("TestResult")
-                        .HasForeignKey("TestingSystem.Core.Models.TestResult", "ScoreId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TestingSystem.Core.Models.Test", "Test")
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.TestEntity", "Test")
                         .WithMany()
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TestingSystem.Core.Models.User", "User")
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.UserEntity", "User")
                         .WithMany("TestsResults")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Score");
 
                     b.Navigation("Test");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.User", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.UserAnswerEntity", b =>
                 {
-                    b.HasOne("TestingSystem.Core.Models.Image", "Image")
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.AnswerOptionEntity", "AnswerOption")
+                        .WithMany()
+                        .HasForeignKey("AnswerOptionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.TestResultEntity", null)
+                        .WithMany("UserAnswers")
+                        .HasForeignKey("TestResultEntityId");
+
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.TestResultEntity", "TestResult")
+                        .WithMany()
+                        .HasForeignKey("TestResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnswerOption");
+
+                    b.Navigation("TestResult");
+                });
+
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.UserEntity", b =>
+                {
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.ImageEntity", "Image")
                         .WithMany()
                         .HasForeignKey("ImageId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -390,38 +403,15 @@ namespace TestingSystem.Data.Sqlite.Migrations
                     b.Navigation("Image");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.UserAnswer", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.VectorScoreEntity", b =>
                 {
-                    b.HasOne("TestingSystem.Core.Models.AnswerOption", "AnswerOption")
-                        .WithMany()
-                        .HasForeignKey("AnswerOptionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("TestingSystem.Core.Models.TestResult", "TestResult")
-                        .WithMany()
-                        .HasForeignKey("TestResultId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TestingSystem.Core.Models.TestResult", null)
-                        .WithMany("UserAnswers")
-                        .HasForeignKey("TestResultId1");
-
-                    b.Navigation("AnswerOption");
-
-                    b.Navigation("TestResult");
-                });
-
-            modelBuilder.Entity("TestingSystem.Core.Models.VectorScore", b =>
-                {
-                    b.HasOne("TestingSystem.Core.Models.Score", "Score")
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.ScoreEntity", "Score")
                         .WithMany("VectorsScores")
                         .HasForeignKey("ScoreId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TestingSystem.Core.Models.Vector", "Vector")
+                    b.HasOne("TestingSystem.Data.Sqlite.Entities.VectorEntity", "Vector")
                         .WithMany()
                         .HasForeignKey("VectorId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -432,29 +422,27 @@ namespace TestingSystem.Data.Sqlite.Migrations
                     b.Navigation("Vector");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.Question", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.QuestionEntity", b =>
                 {
                     b.Navigation("AnswersOptions");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.Score", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.ScoreEntity", b =>
                 {
-                    b.Navigation("TestResult");
-
                     b.Navigation("VectorsScores");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.Test", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.TestEntity", b =>
                 {
                     b.Navigation("Questions");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.TestResult", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.TestResultEntity", b =>
                 {
                     b.Navigation("UserAnswers");
                 });
 
-            modelBuilder.Entity("TestingSystem.Core.Models.User", b =>
+            modelBuilder.Entity("TestingSystem.Data.Sqlite.Entities.UserEntity", b =>
                 {
                     b.Navigation("TestsResults");
                 });

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36221.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingSystem", "TestingSystem\TestingSystem.csproj", "{7997B75D-65E2-4DFD-B67B-0D3836E2A313}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingSystem.Wpf", "TestingSystem.Wpf\TestingSystem.Wpf.csproj", "{7997B75D-65E2-4DFD-B67B-0D3836E2A313}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingSystem.Core", "TestingSystem.Core\TestingSystem.Core.csproj", "{71F8B45C-6A2B-45B5-AA52-EA52D213C677}"
 EndProject

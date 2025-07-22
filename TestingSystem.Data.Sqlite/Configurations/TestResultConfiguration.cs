@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TestingSystem.Core.Models;
+using TestingSystem.Data.Sqlite.Entities;
 
 namespace TestingSystem.Data.Sqlite.Configurations
 {
-    public class TestResultConfiguration : IEntityTypeConfiguration<TestResult>
+    public class TestResultConfiguration : IEntityTypeConfiguration<TestResultEntity>
     {
-        public void Configure(EntityTypeBuilder<TestResult> builder)
+        public void Configure(EntityTypeBuilder<TestResultEntity> builder)
         {
 
             builder.HasKey(x => x.Id);
@@ -25,11 +25,6 @@ namespace TestingSystem.Data.Sqlite.Configurations
                 .HasOne(tr => tr.Test)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
-            builder
-                .HasOne(tr => tr.Score)
-                .WithOne(s => s.TestResult)
-                .HasForeignKey<TestResult>(tr => tr.ScoreId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

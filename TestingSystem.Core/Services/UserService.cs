@@ -1,4 +1,4 @@
-﻿using TestingSystem.Core.Models;
+﻿using TestingSystem.Core.DTOs;
 using TestingSystem.Core.Repositories;
 using TestingSystem.Core.Utils;
 
@@ -15,55 +15,73 @@ namespace TestingSystem.Core.Services
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<User> Authenticate(string login, string password)
+        public async Task<UserProfileDto?> Authenticate(UserLoginDto userLoginDto)
         {
-            var user = await _userRepository.GetUserByLogin(login);
-            if (user == null || !_passwordHasher.VerifyPassword(password, user.PasswordHash, user.PasswordSalt))
-            {
+            if (string.IsNullOrEmpty(userLoginDto.Login) ||
+                string.IsNullOrEmpty(userLoginDto.Password))
+                throw new ArgumentException("Логин и пароль обязательны.");
+
+            var user = await _userRepository.GetUserByLogin(userLoginDto.Login);
+            if (user == null || !_passwordHasher.VerifyPassword(userLoginDto.Password, user.PasswordHash, user.PasswordSalt))
                 return null; // Аутентификация не удалась
-            }
-            return user;
+            
+            return new UserProfileDto 
+            {
+                Id = user.Id,
+                Login = user.Login,
+                Name = user.Name,
+            };
         }
 
-        public async Task<User> Register(string username, string login, string password)
+        public async Task<UserProfileDto> Register(UserRegisterDto userRegisterDto)
         {
             // Валидация
-            if (string.IsNullOrEmpty(username) ||
-                string.IsNullOrEmpty(login) ||
-                string.IsNullOrEmpty(password))
-            {
+            if (string.IsNullOrEmpty(userRegisterDto.Name) ||
+                string.IsNullOrEmpty(userRegisterDto.Login) ||
+                string.IsNullOrEmpty(userRegisterDto.Password))
                 throw new ArgumentException("Имя пользователя, логин и пароль обязательны.");
-            }
 
-            if (await _userRepository.LoginExists(login))
-            {
+            if (await _userRepository.LoginExists(userRegisterDto.Login))
                 throw new ArgumentException("Пользователь с таким логином уже существует.");
-            }
 
             // Хэширование пароля
-            var (hash, salt) = _passwordHasher.HashPassword(password);
+            var (hash, salt) = _passwordHasher.HashPassword(userRegisterDto.Password);
 
             // Создание пользователя
-            var user = new User
+            var userData = new UserDataDto
             {
-                Name = username,
-                Login = login,
+                Name = userRegisterDto.Name,
                 PasswordHash = hash,
                 PasswordSalt = salt,
             };
 
-            await _userRepository.Add(user);
-            return user;
+            var createdUser = await _userRepository.CreateUser(userData);
+
+            return new UserProfileDto 
+            {
+                Id = createdUser.Id,
+                Name = createdUser.Name,
+                Login = createdUser.Login,
+            };
         }
 
-        public async Task<User> GetUserById(int id)
+        public async Task<UserProfileDto?> GetProfile(int userId)
         {
-            return await _userRepository.GetById(id);
+            var userEntity = await _userRepository.GetUserById(userId);
+            if (userEntity == null)
+                return null;
+
+            return new UserProfileDto
+            {
+                Id = userEntity.Id,
+                Login = userEntity.Login,
+                Name = userEntity.Name,
+            };
         }
 
-        public async Task UpdateUser(User user)
-        {
-            await _userRepository.Update(user);
-        }
+        //public async Task UpdateUser(User user)
+        //{
+        //    await _userRepository.Update(user);
+        //}
     }
 }

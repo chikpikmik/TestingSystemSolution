@@ -1,11 +1,11 @@
-﻿using TestingSystem.Core.Models;
+﻿using TestingSystem.Core.DTOs;
 
 namespace TestingSystem.Core.Services {
     public interface IUserService
     {
-        Task<User> Authenticate(string username, string password);
-        Task<User> Register(string username, string login, string password);
-        Task<User> GetUserById(int id);
-        Task UpdateUser(User user);
+        Task<UserProfileDto?> Authenticate(UserLoginDto userLoginDto);
+        Task<UserProfileDto> Register(UserRegisterDto userRegisterDto);
+        Task<UserProfileDto?> GetProfile(int userId);
+        //Task UpdateUser(UserProfileUpdateDto user);
     }
 }

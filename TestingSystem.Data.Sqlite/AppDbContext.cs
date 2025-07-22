@@ -1,22 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using TestingSystem.Core.Models;
 using TestingSystem.Data.Sqlite.Configurations;
+using TestingSystem.Data.Sqlite.Entities;
 
 namespace TestingSystem.Data.Sqlite
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Test> Tests { get; set; }
-        public DbSet<Question> Questions { get; set; }
-        public DbSet<AnswerOption> AnswersOptions { get; set; }
-        public DbSet<TestResult> TestsResults { get; set; }
-        public DbSet<UserAnswer> UsersAnswers { get; set; }
-        public DbSet<Vector> Vectors { get; set; }
-        public DbSet<VectorScore> VectorsScores { get; set; }
-        public DbSet<Score> Scores { get; set; }
-        public DbSet<Image> Images { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<TestEntity> Tests { get; set; }
+        public DbSet<QuestionEntity> Questions { get; set; }
+        public DbSet<AnswerOptionEntity> AnswersOptions { get; set; }
+        public DbSet<TestResultEntity> TestsResults { get; set; }
+        public DbSet<UserAnswerEntity> UsersAnswers { get; set; }
+        public DbSet<VectorEntity> Vectors { get; set; }
+        public DbSet<VectorScoreEntity> VectorsScores { get; set; }
+        public DbSet<ScoreEntity> Scores { get; set; }
+        public DbSet<ImageEntity> Images { get; set; }
 
 
         // Основной конструктор для DI

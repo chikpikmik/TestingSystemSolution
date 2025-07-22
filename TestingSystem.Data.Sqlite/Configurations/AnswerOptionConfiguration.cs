@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TestingSystem.Core.Models;
+using TestingSystem.Data.Sqlite.Entities;
 
 namespace TestingSystem.Data.Sqlite.Configurations
 {
-    public class AnswerOptionConfiguration : IEntityTypeConfiguration<AnswerOption>
+    public class AnswerOptionConfiguration : IEntityTypeConfiguration<AnswerOptionEntity>
     {
-        public void Configure(EntityTypeBuilder<AnswerOption> builder)
+        public void Configure(EntityTypeBuilder<AnswerOptionEntity> builder)
         {
 
             builder.HasKey(x => x.Id);

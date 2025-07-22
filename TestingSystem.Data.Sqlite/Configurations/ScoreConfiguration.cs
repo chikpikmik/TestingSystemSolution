@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TestingSystem.Core.Models;
+using TestingSystem.Data.Sqlite.Entities;
 
 namespace TestingSystem.Data.Sqlite.Configurations
 {
-    public class ScoreConfiguration : IEntityTypeConfiguration<Score>
+    public class ScoreConfiguration : IEntityTypeConfiguration<ScoreEntity>
 
     {
-        public void Configure(EntityTypeBuilder<Score> builder)
+        public void Configure(EntityTypeBuilder<ScoreEntity> builder)
         {
 
             builder.HasKey(x => x.Id);
@@ -19,13 +19,6 @@ namespace TestingSystem.Data.Sqlite.Configurations
                 .HasMany(s => s.VectorsScores)
                 .WithOne(vs => vs.Score)
                 .OnDelete(DeleteBehavior.Cascade);
-            
-            builder
-                .HasOne(s => s.TestResult)
-                .WithOne(tr => tr.Score)
-                .HasForeignKey<TestResult>(tr => tr.ScoreId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
